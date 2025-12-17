@@ -3,6 +3,9 @@ import { Header } from "@/components/header";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { About } from "@/components/sections/about";
 import { Projects } from "@/components/sections/projects";
+import { Skills } from "@/components/sections/skills";
+import { Contact } from "@/components/sections/contact";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -12,6 +15,9 @@ export default function Home() {
       <Hero />
       <About />
       <Projects />
+      <Skills />
+      <Contact />
+      <Footer />
     </main>
   );
 }
