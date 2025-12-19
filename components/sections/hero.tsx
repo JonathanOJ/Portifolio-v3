@@ -5,9 +5,33 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/context";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function Hero() {
   const { t } = useI18n();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const darkGradients = {
+    color1: "rgba(59, 130, 246, 0.08)",
+    color2: "rgba(139, 92, 246, 0.06)",
+    color3: "rgba(16, 185, 129, 0.05)",
+    background: "#000000",
+  };
+
+  const lightGradients = {
+    color1: "rgba(59, 130, 246, 0.15)",
+    color2: "rgba(139, 92, 246, 0.12)",
+    color3: "rgba(16, 185, 129, 0.10)",
+    background: "#ffffff",
+  };
+
+  const gradients = mounted && theme === "light" ? lightGradients : darkGradients;
 
   const container = {
     hidden: { opacity: 0 },
@@ -31,10 +55,10 @@ export function Hero() {
           className="absolute inset-0"
           style={{
             background: `
-              radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
-              radial-gradient(circle at 40% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-              #000000
+              radial-gradient(circle at 20% 50%, ${gradients.color1} 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, ${gradients.color2} 0%, transparent 50%),
+              radial-gradient(circle at 40% 20%, ${gradients.color3} 0%, transparent 50%),
+              ${gradients.background}
             `,
           }}
           animate={{
