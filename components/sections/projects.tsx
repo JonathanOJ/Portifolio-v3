@@ -8,19 +8,32 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useI18n } from "@/lib/i18n/context";
+
+interface ProjectData {
+  id: number;
+  slug: string;
+  image: string;
+  link: string;
+  featured: boolean;
+  stack: {
+    frontend?: string[];
+    backend?: string[];
+    testing?: string[];
+  };
+}
 
 export function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { t } = useI18n();
 
-  const projects = [
+  const projectsData: ProjectData[] = [
     {
       id: 1,
-      name: t.projects.items.hopeshare.name,
-      type: t.projects.items.hopeshare.type,
-      description: t.projects.items.hopeshare.description,
+      slug: "hopeshare",
+      image: "/images/hopeshare.jpeg",
       link: "https://hope-share-frontend.vercel.app/hopeshare/home",
       featured: true,
       stack: {
@@ -36,14 +49,11 @@ export function Projects() {
           "Mercado Pago",
         ],
       },
-      features: t.projects.items.hopeshare.features,
-      highlights: t.projects.items.hopeshare.highlights,
     },
     {
       id: 2,
-      name: t.projects.items.vidaplan.name,
-      type: t.projects.items.vidaplan.type,
-      description: t.projects.items.vidaplan.description,
+      slug: "vidaplan",
+      image: "/images/vidaplancrm.jpeg",
       link: "#",
       featured: true,
       stack: {
@@ -70,23 +80,28 @@ export function Projects() {
         ],
         testing: ["Vitest", "Testing Library"],
       },
-      features: t.projects.items.vidaplan.features,
-      security: t.projects.items.vidaplan.security,
-      highlights: t.projects.items.vidaplan.highlights,
     },
     {
       id: 3,
-      name: t.projects.items.waveodonto.name,
-      type: t.projects.items.waveodonto.type,
-      description: t.projects.items.waveodonto.description,
+      slug: "waveodonto",
+      image: "/images/waveodontologia.jpeg",
       link: "https://waveodonto.com.br/",
       featured: false,
       stack: {
         frontend: ["React", "JavaScript", "TypeScript", "CSS moderno"],
       },
-      highlights: t.projects.items.waveodonto.highlights,
     },
   ];
+
+  const projects = projectsData.map((data) => ({
+    ...data,
+    name: t.projects.items[data.slug as keyof typeof t.projects.items].name,
+    type: t.projects.items[data.slug as keyof typeof t.projects.items].type,
+    description: t.projects.items[data.slug as keyof typeof t.projects.items].description,
+    features: (t.projects.items[data.slug as keyof typeof t.projects.items] as any).features,
+    security: (t.projects.items[data.slug as keyof typeof t.projects.items] as any).security,
+    highlights: t.projects.items[data.slug as keyof typeof t.projects.items].highlights,
+  }));
 
   return (
     <section id="projetos" className="py-24" ref={ref}>
@@ -119,10 +134,23 @@ export function Projects() {
               className={project.featured ? "lg:col-span-2" : ""}
             >
               <Card
-                className={`h-full flex flex-col hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/50 ${
+                className={`h-full flex flex-col hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/50 overflow-hidden pt-0 ${
                   project.featured ? "bg-gradient-to-br from-primary/5 to-accent/5" : ""
                 }`}
               >
+                <div className="relative w-full h-64 overflow-hidden bg-muted">
+                  <Image
+                    src={project.image || "/placeholder.svg"}
+                    alt={project.name}
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={project.featured}
+                  />
+                  {/* Gradient overlay for better text visibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                </div>
+
                 <CardHeader>
                   <div className="flex items-start justify-between mb-2">
                     <Badge variant={project.featured ? "default" : "secondary"}>{project.type}</Badge>
@@ -183,7 +211,7 @@ export function Projects() {
                     <div>
                       <h4 className="font-semibold mb-3 text-sm">{t.projects.sections.features}</h4>
                       <ul className="space-y-1 text-sm text-muted-foreground">
-                        {project.features.slice(0, 4).map((feature) => (
+                        {project.features.slice(0, 4).map((feature: string) => (
                           <li key={feature} className="flex items-start gap-2">
                             <span className="text-primary mt-1">•</span>
                             <span>{feature}</span>
@@ -197,7 +225,7 @@ export function Projects() {
                     <div>
                       <h4 className="font-semibold mb-3 text-sm">{t.projects.sections.security}</h4>
                       <ul className="space-y-1 text-sm text-muted-foreground">
-                        {project.security.slice(0, 3).map((security) => (
+                        {project.security.slice(0, 3).map((security: string) => (
                           <li key={security} className="flex items-start gap-2">
                             <span className="text-primary mt-1">•</span>
                             <span>{security}</span>
@@ -211,7 +239,7 @@ export function Projects() {
                     <div>
                       <h4 className="font-semibold mb-3 text-sm">{t.projects.sections.highlights}</h4>
                       <div className="flex flex-wrap gap-2">
-                        {project.highlights.map((highlight) => (
+                        {project.highlights.map((highlight: string) => (
                           <Badge key={highlight} variant="secondary" className="text-xs">
                             {highlight}
                           </Badge>
