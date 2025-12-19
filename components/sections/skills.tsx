@@ -1,24 +1,26 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef, useState } from "react"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useI18n } from "@/lib/i18n/context";
 
 export function Skills() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const { t } = useI18n();
 
   const skillSections = [
     {
-      title: "Core Stack",
-      subtitle: "Uso diário / projetos principais",
+      title: t.skills.sections.coreStack.title,
+      subtitle: t.skills.sections.coreStack.subtitle,
       icon: "🚀",
       categories: [
         {
-          name: "Frontend",
+          name: t.skills.categories.frontend,
           skills: [
             { name: "React", projects: ["Vidaplan CRM", "Wave Odonto"] },
             { name: "Angular", projects: ["CISS", "HopeShare"] },
@@ -28,7 +30,7 @@ export function Skills() {
           ],
         },
         {
-          name: "Backend",
+          name: t.skills.categories.backend,
           skills: [
             { name: "Node.js", projects: ["HopeShare"] },
             { name: "Java", projects: ["CISS", "LeadFinder"] },
@@ -38,7 +40,7 @@ export function Skills() {
           ],
         },
         {
-          name: "Banco de Dados",
+          name: t.skills.categories.database,
           skills: [
             { name: "PostgreSQL", projects: ["Vidaplan CRM", "LeadFinder", "CISS"] },
             { name: "DynamoDB", projects: ["HopeShare"] },
@@ -48,8 +50,8 @@ export function Skills() {
       ],
     },
     {
-      title: "Arquitetura & Padrões",
-      subtitle: "Estrutura e organização de código",
+      title: t.skills.sections.architecture.title,
+      subtitle: t.skills.sections.architecture.subtitle,
       icon: "🧩",
       categories: [
         {
@@ -65,8 +67,8 @@ export function Skills() {
       ],
     },
     {
-      title: "Cloud, DevOps & Infra",
-      subtitle: "Deploy e infraestrutura",
+      title: t.skills.sections.cloud.title,
+      subtitle: t.skills.sections.cloud.subtitle,
       icon: "☁️",
       categories: [
         {
@@ -83,8 +85,8 @@ export function Skills() {
       ],
     },
     {
-      title: "Ferramentas & Qualidade",
-      subtitle: "Produtividade e boas práticas",
+      title: t.skills.sections.tools.title,
+      subtitle: t.skills.sections.tools.subtitle,
       icon: "🛠️",
       categories: [
         {
@@ -99,7 +101,7 @@ export function Skills() {
         },
       ],
     },
-  ]
+  ];
 
   return (
     <section id="skills" className="py-24 bg-muted/30" ref={ref}>
@@ -110,11 +112,9 @@ export function Skills() {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Habilidades</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.skills.title}</h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-4" />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-            Não é sobre quanto eu sei, é sobre o que eu já construí com isso.
-          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">{t.skills.subtitle}</p>
         </motion.div>
 
         <div className="space-y-8 max-w-6xl mx-auto">
@@ -169,7 +169,7 @@ export function Skills() {
                                 className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-popover border border-border rounded-md shadow-lg whitespace-nowrap z-10 pointer-events-none"
                               >
                                 <div className="text-xs">
-                                  <div className="font-semibold mb-1 text-foreground">Usado em:</div>
+                                  <div className="font-semibold mb-1 text-foreground">{t.skills.usedIn}</div>
                                   <div className="text-muted-foreground">{skill.projects.join(", ")}</div>
                                 </div>
                                 <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
@@ -190,5 +190,5 @@ export function Skills() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,121 +1,68 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef } from "react"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Briefcase, GraduationCap, MapPin, Calendar } from "lucide-react"
-import { TechCarousel } from "@/components/tech-carousel"
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Briefcase, GraduationCap, MapPin, Calendar } from "lucide-react";
+import { TechCarousel } from "@/components/tech-carousel";
+import { useI18n } from "@/lib/i18n/context";
 
 export function About() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useI18n();
 
   const timeline = [
     {
       type: "work",
-      company: "CISS S.A – Gestão para o Varejo",
-      location: "Dois Vizinhos – PR",
-      period: "Out/2024 – Atual",
+      company: t.about.timeline.ciss.company,
+      location: t.about.timeline.ciss.location,
+      period: `${t.about.timeline.ciss.positions.junior.period.split(" - ")[0]} – ${t.about.timeline.ciss.current}`,
       current: true,
       positions: [
         {
-          title: "Desenvolvedor Full-Stack Pleno",
-          period: "Jun/2025 – Atual",
+          title: t.about.timeline.ciss.positions.pleno.role,
+          period: t.about.timeline.ciss.positions.pleno.period,
           current: true,
-          description:
-            "Atuação em projetos corporativos de grande escala, com maior participação em decisões técnicas e arquiteturais.",
-          responsibilities: [
-            "Atuação em projetos corporativos de grande escala",
-            "Desenvolvimento Front-end com Angular 17 e TypeScript",
-            "Participação ativa em decisões técnicas e funcionais",
-            "Integração com APIs REST e regras de negócio",
-            "Colaboração em serviços Back-end com Java 17 e Spring Boot",
-          ],
-          stack: [
-            "Angular 17",
-            "TypeScript",
-            "Micro-Frontend",
-            "Java 17",
-            "Spring Boot",
-            "PostgreSQL",
-            "DB2",
-            "REST APIs",
-            "Git",
-            "Scrum",
-          ],
+          description: t.about.timeline.ciss.positions.pleno.responsibilities[0],
+          responsibilities: t.about.timeline.ciss.positions.pleno.responsibilities,
+          stack: t.about.timeline.ciss.positions.pleno.stack,
         },
         {
-          title: "Desenvolvedor Full-Stack",
-          period: "Out/2024 – Jun/2025",
+          title: t.about.timeline.ciss.positions.junior.role,
+          period: t.about.timeline.ciss.positions.junior.period,
           current: false,
-          description:
-            "Desenvolvimento e manutenção de portais corporativos escaláveis, com foco em interfaces modernas e integração com sistemas back-end.",
-          responsibilities: [
-            "Desenvolvimento e manutenção de portais corporativos escaláveis",
-            "Implementação de interfaces com foco em UX, performance e responsividade",
-            "Integração com sistemas back-end em Java + Spring Boot",
-            "Aplicação de boas práticas de código e componentização",
-          ],
-          stack: [
-            "Angular",
-            "TypeScript",
-            "Micro-Frontend",
-            "Java",
-            "Spring Boot",
-            "DB2",
-            "PostgreSQL",
-            "REST",
-            "Git",
-            "JIRA",
-          ],
+          description: t.about.timeline.ciss.positions.junior.responsibilities[0],
+          responsibilities: t.about.timeline.ciss.positions.junior.responsibilities,
+          stack: t.about.timeline.ciss.positions.junior.stack,
         },
       ],
     },
     {
       type: "work",
-      title: "Desenvolvedor Full-Stack",
-      company: "LeadFinder | SmartCRM IA",
-      location: "Dois Vizinhos – PR",
-      period: "Mar/2023 – Out/2024",
+      title: t.about.timeline.leadfinder.role,
+      company: t.about.timeline.leadfinder.company,
+      location: t.about.timeline.leadfinder.location,
+      period: t.about.timeline.leadfinder.period,
       current: false,
-      description:
-        "Atuação no desenvolvimento e evolução de aplicações web e mobile, com foco em Front-end Angular, arquitetura Micro-Frontend e otimização de sistemas existentes.",
-      responsibilities: [
-        "Desenvolvimento de aplicações web e mobile",
-        "Arquitetura Micro-Frontend",
-        "Aplicações mobile híbridas com Ionic + Angular",
-        "Integração com APIs REST e banco PostgreSQL",
-      ],
-      stack: ["Angular", "Ionic", "TypeScript", "Micro-Frontend", "Java", "PostgreSQL", "Git", "Scrum", "AWS"],
+      description: t.about.timeline.leadfinder.responsibilities[0],
+      responsibilities: t.about.timeline.leadfinder.responsibilities,
+      stack: t.about.timeline.leadfinder.stack,
     },
     {
       type: "education",
-      title: "Bacharelado em Engenharia de Software",
-      company: "Universidade Tecnológica Federal do Paraná (UTFPR)",
-      location: "Dois Vizinhos – PR",
-      period: "Mar/2022 – Dez/2025",
+      title: t.about.timeline.utfpr.degree,
+      company: t.about.timeline.utfpr.institution,
+      location: t.about.timeline.utfpr.location,
+      period: t.about.timeline.utfpr.period,
       current: false,
-      description:
-        "Formação sólida em desenvolvimento de software, com foco em estruturas de dados, algoritmos, arquitetura de sistemas e metodologias ágeis.",
-      highlights: [
-        "Estruturas de Dados e Algoritmos",
-        "Engenharia de Software e Arquitetura",
-        "Metodologias Ágeis",
-        "Banco de Dados e SQL",
-        "Gestão de Projetos",
-      ],
-      stack: [
-        "Estruturas de Dados",
-        "Análise de Problemas",
-        "Liderança",
-        "Metodologias Ágeis",
-        "SQL",
-        "Gestão de Projetos",
-      ],
+      description: t.about.timeline.utfpr.description,
+      stack: t.about.timeline.utfpr.stack,
+      highlights: t.about.timeline.utfpr.highlights,
     },
-  ]
+  ];
 
   return (
     <section id="sobre" className="py-24 bg-muted/30" ref={ref}>
@@ -127,7 +74,7 @@ export function About() {
           className="max-w-4xl mx-auto"
         >
           <div className="mb-12 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Sobre Mim</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.about.title}</h2>
             <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
           </div>
 
@@ -137,22 +84,14 @@ export function About() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mb-16"
           >
-            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-              Desenvolvedor Full-Stack com sólida experiência em arquitetura de software moderna e desenvolvimento de
-              sistemas escaláveis. Especializado em Front-end com Angular, TypeScript e arquitetura Micro-Frontend, com
-              forte atuação também em back-end usando Java e Spring Boot.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              Atuo no desenvolvimento de portais corporativos de grande escala, aplicando boas práticas de código,
-              componentização e performance. Tenho experiência com metodologias ágeis, integração de APIs REST e
-              desenvolvimento de aplicações web e mobile híbridas.
-            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-4">{t.about.intro1}</p>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-8">{t.about.intro2}</p>
 
             <TechCarousel />
           </motion.div>
 
           <div className="space-y-6">
-            <h3 className="text-2xl font-bold mb-8 text-center">Experiência & Formação</h3>
+            <h3 className="text-2xl font-bold mb-8 text-center">{t.about.timelineTitle}</h3>
 
             {timeline.map((item, index) => (
               <motion.div
@@ -165,7 +104,9 @@ export function About() {
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <div
-                        className={`w-12 h-12 rounded-full ${item.current ? "bg-primary" : "bg-primary/10"} flex items-center justify-center`}
+                        className={`w-12 h-12 rounded-full ${
+                          item.current ? "bg-primary" : "bg-primary/10"
+                        } flex items-center justify-center`}
                       >
                         {item.type === "work" ? (
                           <Briefcase
@@ -185,7 +126,7 @@ export function About() {
                                 {item.company}
                                 {item.current && (
                                   <Badge variant="default" className="text-xs">
-                                    Atual
+                                    {t.about.badges.current}
                                   </Badge>
                                 )}
                               </h4>
@@ -220,7 +161,9 @@ export function About() {
                                 />
 
                                 <div
-                                  className={`p-4 rounded-lg ${position.current ? "bg-primary/5 border border-primary/20" : "bg-muted/30"}`}
+                                  className={`p-4 rounded-lg ${
+                                    position.current ? "bg-primary/5 border border-primary/20" : "bg-muted/30"
+                                  }`}
                                 >
                                   <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2 gap-2">
                                     <h5 className="font-semibold">{position.title}</h5>
@@ -262,7 +205,7 @@ export function About() {
                                 {item.title}
                                 {item.current && (
                                   <Badge variant="default" className="text-xs">
-                                    Atual
+                                    {t.about.badges.current}
                                   </Badge>
                                 )}
                               </h4>
@@ -322,5 +265,5 @@ export function About() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

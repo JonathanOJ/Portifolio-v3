@@ -13,12 +13,14 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Github, Linkedin, Mail, Send } from "lucide-react";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n/context";
 
 export function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { t } = useI18n();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -27,8 +29,8 @@ export function Contact() {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     toast({
-      title: "Mensagem enviada!",
-      description: "Obrigado pelo contato. Responderei em breve.",
+      title: t.contact.form.success,
+      description: t.contact.form.successDescription,
     });
 
     setIsSubmitting(false);
@@ -38,19 +40,19 @@ export function Contact() {
   const contactInfo = [
     {
       icon: Github,
-      label: "GitHub",
+      label: t.contact.info.github,
       value: "@JonathanOJ",
       href: "https://github.com/JonathanOJ",
     },
     {
       icon: Linkedin,
-      label: "LinkedIn",
+      label: t.contact.info.linkedin,
       value: "Jonathan Oleniki Jacobovski",
       href: "https://www.linkedin.com/in/jonathan-oleniki-jacobovski-9ba2b8ba/",
     },
     {
       icon: Mail,
-      label: "Email",
+      label: t.contact.info.email,
       value: "jonathan_jacobovski@hotmail.com",
       href: "mailto:jonathan_jacobovski@hotmail.com",
     },
@@ -65,11 +67,9 @@ export function Contact() {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Entre em Contato</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.contact.title}</h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-4" />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Estou sempre aberto a novas oportunidades e colaborações. Vamos conversar!
-          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t.contact.subtitle}</p>
         </motion.div>
 
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -79,32 +79,39 @@ export function Contact() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <Card className="p-8 h-full">
-              <h3 className="text-2xl font-bold mb-6">Envie uma Mensagem</h3>
+              <h3 className="text-2xl font-bold mb-6">{t.contact.form.title}</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <Label htmlFor="name">Nome</Label>
-                  <Input id="name" name="name" placeholder="Seu nome completo" required className="mt-1" />
+                  <Label htmlFor="name">{t.contact.form.name}</Label>
+                  <Input id="name" name="name" placeholder={t.contact.form.namePlaceholder} required className="mt-1" />
                 </div>
                 <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" name="email" type="email" placeholder="seu@email.com" required className="mt-1" />
+                  <Label htmlFor="email">{t.contact.form.email}</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder={t.contact.form.emailPlaceholder}
+                    required
+                    className="mt-1"
+                  />
                 </div>
                 <div>
-                  <Label htmlFor="message">Mensagem</Label>
+                  <Label htmlFor="message">{t.contact.form.message}</Label>
                   <Textarea
                     id="message"
                     name="message"
-                    placeholder="Sua mensagem..."
+                    placeholder={t.contact.form.messagePlaceholder}
                     required
                     className="mt-1 min-h-32"
                   />
                 </div>
                 <Button type="submit" disabled={isSubmitting} className="w-full rounded-full" size="lg">
                   {isSubmitting ? (
-                    "Enviando..."
+                    t.contact.form.sending
                   ) : (
                     <>
-                      Enviar Mensagem
+                      {t.contact.form.submit}
                       <Send className="ml-2 h-4 w-4" />
                     </>
                   )}
@@ -120,7 +127,7 @@ export function Contact() {
             className="space-y-6"
           >
             <Card className="p-8">
-              <h3 className="text-2xl font-bold mb-6">Informações de Contato</h3>
+              <h3 className="text-2xl font-bold mb-6">{t.contact.info.title}</h3>
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.div
@@ -149,11 +156,8 @@ export function Contact() {
             </Card>
 
             <Card className="p-8 bg-gradient-to-br from-primary/10 to-accent/10">
-              <h4 className="font-bold mb-2">Disponível para Freelance</h4>
-              <p className="text-sm text-muted-foreground">
-                Estou disponível para projetos freelance e consultorias. Entre em contato para discutirmos como posso
-                ajudar seu projeto.
-              </p>
+              <h4 className="font-bold mb-2">{t.contact.availability.title}</h4>
+              <p className="text-sm text-muted-foreground">{t.contact.availability.description}</p>
             </Card>
           </motion.div>
         </div>

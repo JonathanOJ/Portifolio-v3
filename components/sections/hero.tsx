@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n/context";
 
 export function Hero() {
+  const { t } = useI18n();
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -54,31 +57,30 @@ export function Hero() {
       <div className="container mx-auto px-4 z-10">
         <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl mx-auto text-center">
           <motion.div variants={item} className="mb-4">
-            <span className="text-sm font-mono text-primary">Olá, meu nome é</span>
+            <span className="text-sm font-mono text-primary">{t.hero.greeting}</span>
           </motion.div>
 
           <motion.h1 variants={item} className="text-5xl md:text-7xl font-bold mb-4 text-balance">
-            Jonathan Oleniki Jacobovski
+            {t.hero.name}
           </motion.h1>
 
           <motion.h2 variants={item} className="text-3xl md:text-5xl font-bold mb-6 text-muted-foreground">
-            Full-Stack Developer
+            {t.hero.role}
           </motion.h2>
 
           <motion.p
             variants={item}
             className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed text-pretty"
           >
-            Especializado em criar experiências web modernas, escaláveis e performáticas. Transformo ideias em produtos
-            digitais elegantes usando as tecnologias mais recentes do mercado.
+            {t.hero.description}
           </motion.p>
 
           <motion.div variants={item} className="flex flex-wrap items-center justify-center gap-4 mb-12">
             <Button asChild size="lg" className="rounded-full">
-              <Link href="#projetos">Ver Projetos</Link>
+              <Link href="#projetos">{t.hero.cta.projects}</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="rounded-full bg-transparent">
-              <Link href="#contato">Entre em Contato</Link>
+              <Link href="#contato">{t.hero.cta.contact}</Link>
             </Button>
           </motion.div>
 
@@ -90,7 +92,7 @@ export function Hero() {
               className="text-muted-foreground hover:text-foreground transition-all hover:scale-110"
             >
               <Github className="h-6 w-6" />
-              <span className="sr-only">GitHub</span>
+              <span className="sr-only">{t.hero.socialLinks.github}</span>
             </Link>
             <Link
               href="https://www.linkedin.com/in/jonathan-oleniki-jacobovski-9ba2b8ba/"
@@ -99,21 +101,21 @@ export function Hero() {
               className="text-muted-foreground hover:text-foreground transition-all hover:scale-110"
             >
               <Linkedin className="h-6 w-6" />
-              <span className="sr-only">LinkedIn</span>
+              <span className="sr-only">{t.hero.socialLinks.linkedin}</span>
             </Link>
             <Link
               href="mailto:jonathan_jacobovski@hotmail.com"
               className="text-muted-foreground hover:text-foreground transition-all hover:scale-110"
             >
               <Mail className="h-6 w-6" />
-              <span className="sr-only">Email</span>
+              <span className="sr-only">{t.hero.socialLinks.email}</span>
             </Link>
           </motion.div>
 
           <motion.div variants={item} className="absolute bottom-8 left-1/2 -translate-x-1/2">
             <Link href="#sobre" className="block animate-bounce">
               <ArrowDown className="h-6 w-6 text-muted-foreground" />
-              <span className="sr-only">Rolar para baixo</span>
+              <span className="sr-only">{t.hero.scrollDown}</span>
             </Link>
           </motion.div>
         </motion.div>

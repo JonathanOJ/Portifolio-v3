@@ -1,132 +1,92 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef } from "react"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github } from "lucide-react"
-import Link from "next/link"
-
-const projects = [
-  {
-    id: 1,
-    name: "HopeShare",
-    type: "Plataforma Full-Stack",
-    description:
-      "Plataforma completa de crowdfunding social com arquitetura serverless, autenticação avançada e sistema de pagamentos.",
-    longDescription:
-      "HopeShare é uma plataforma web de crowdfunding social que conecta pessoas, empresas e organizações a causas solidárias. O sistema permite criação, gerenciamento e doação para campanhas, com controle administrativo, relatórios financeiros e alto nível de segurança.",
-    link: "https://hope-share-frontend.vercel.app/hopeshare/home",
-    featured: true,
-    stack: {
-      frontend: ["Angular 17", "TypeScript", "Tailwind CSS", "PrimeNG", "Angular Material", "RxJS"],
-      backend: [
-        "Node.js",
-        "Express",
-        "Serverless Framework",
-        "AWS Lambda",
-        "API Gateway",
-        "DynamoDB",
-        "Cloudflare R2",
-        "Mercado Pago",
-      ],
-    },
-    features: [
-      "Criação e gerenciamento de campanhas",
-      "Dashboard administrativo com métricas",
-      "Relatórios financeiros (PDF e CSV)",
-      "Autenticação com perfis (usuário, CNPJ e admin)",
-      "Sistema de denúncias e moderação",
-      "Integração com gateway de pagamento",
-    ],
-    highlights: [
-      "Arquitetura Serverless",
-      "Mais de 200 testes unitários",
-      "Autenticação segura com criptografia",
-      "Alta escalabilidade",
-    ],
-  },
-  {
-    id: 2,
-    name: "Vidaplan CRM",
-    type: "Sistema CRM Corporativo",
-    description:
-      "Sistema CRM completo para corretora de seguros, com gestão de clientes, pipeline de vendas em Kanban e alto foco em segurança e performance.",
-    longDescription:
-      "O Vidaplan CRM é um sistema de Customer Relationship Management desenvolvido sob medida para uma corretora de seguros, permitindo o gerenciamento completo do ciclo de vida dos clientes — desde a captação de leads até o acompanhamento pós-venda. A aplicação foi projetada com foco em experiência do usuário, segurança a nível de banco de dados, arquitetura serverless e alta performance, atendendo demandas reais de um ambiente corporativo.",
-    link: "#",
-    featured: true,
-    stack: {
-      frontend: [
-        "React 18",
-        "TypeScript",
-        "Vite",
-        "Tailwind CSS",
-        "Radix UI",
-        "shadcn/ui",
-        "React Router DOM",
-        "React Hook Form",
-        "Zod",
-        "TanStack Query",
-        "@dnd-kit",
-      ],
-      backend: [
-        "PostgreSQL",
-        "Edge Functions",
-        "Deno Runtime",
-        "Arquitetura Serverless",
-        "Autenticação JWT",
-        "Row Level Security (RLS)",
-      ],
-      testing: ["Vitest", "Testing Library"],
-    },
-    features: [
-      "Dashboard com KPIs em tempo real e métricas de crescimento",
-      "Gestão de Clientes com CRUD completo e filtros avançados",
-      "Kanban de Vendas drag-and-drop (Lead → Prospect → Ativo → Cancelado)",
-      "Importação CSV com validação automática e tratamento de duplicatas",
-      "Exportação CSV de dados padronizados para relatórios",
-      "Histórico de Contatos (ligações, e-mails e reuniões)",
-      "Gestão de Usuários com controle de acesso por roles (RBAC)",
-      "Onboarding interativo para novos usuários",
-    ],
-    security: [
-      "Autenticação JWT com refresh tokens",
-      "Row Level Security em todas as tabelas",
-      "Controle de acesso baseado em roles",
-      "Validação de domínio corporativo",
-      "Sanitização de dados sensíveis (CPF, telefone, dados bancários)",
-    ],
-    highlights: [
-      "Optimistic UI Updates com rollback automático",
-      "Importação inteligente de CSV",
-      "Code splitting e lazy loading",
-      "Tema claro/escuro",
-      "Enterprise-grade",
-    ],
-  },
-  {
-    id: 3,
-    name: "Wave Odonto",
-    type: "Site Institucional",
-    description:
-      "Site institucional moderno para clínica odontológica, focado em presença digital, conversão de pacientes e identidade visual profissional.",
-    longDescription:
-      "Desenvolvimento de um site institucional moderno para uma clínica odontológica, com foco em design limpo, performance e experiência do usuário. O projeto valoriza a marca do cliente, apresenta serviços de forma clara e otimiza a conversão de visitantes em pacientes.",
-    link: "https://waveodonto.com.br/",
-    featured: false,
-    stack: {
-      frontend: ["React", "JavaScript", "TypeScript", "CSS moderno"],
-    },
-    highlights: ["Layout moderno e profissional", "Performance otimizada", "Foco em UX e identidade visual"],
-  },
-]
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ExternalLink, Github } from "lucide-react";
+import Link from "next/link";
+import { useI18n } from "@/lib/i18n/context";
 
 export function Projects() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useI18n();
+
+  const projects = [
+    {
+      id: 1,
+      name: t.projects.items.hopeshare.name,
+      type: t.projects.items.hopeshare.type,
+      description: t.projects.items.hopeshare.description,
+      link: "https://hope-share-frontend.vercel.app/hopeshare/home",
+      featured: true,
+      stack: {
+        frontend: ["Angular 17", "TypeScript", "Tailwind CSS", "PrimeNG", "Angular Material", "RxJS"],
+        backend: [
+          "Node.js",
+          "Express",
+          "Serverless Framework",
+          "AWS Lambda",
+          "API Gateway",
+          "DynamoDB",
+          "Cloudflare R2",
+          "Mercado Pago",
+        ],
+      },
+      features: t.projects.items.hopeshare.features,
+      highlights: t.projects.items.hopeshare.highlights,
+    },
+    {
+      id: 2,
+      name: t.projects.items.vidaplan.name,
+      type: t.projects.items.vidaplan.type,
+      description: t.projects.items.vidaplan.description,
+      link: "#",
+      featured: true,
+      stack: {
+        frontend: [
+          "React 18",
+          "TypeScript",
+          "Vite",
+          "Tailwind CSS",
+          "Radix UI",
+          "shadcn/ui",
+          "React Router DOM",
+          "React Hook Form",
+          "Zod",
+          "TanStack Query",
+          "@dnd-kit",
+        ],
+        backend: [
+          "PostgreSQL",
+          "Edge Functions",
+          "Deno Runtime",
+          "Arquitetura Serverless",
+          "Autenticação JWT",
+          "Row Level Security (RLS)",
+        ],
+        testing: ["Vitest", "Testing Library"],
+      },
+      features: t.projects.items.vidaplan.features,
+      security: t.projects.items.vidaplan.security,
+      highlights: t.projects.items.vidaplan.highlights,
+    },
+    {
+      id: 3,
+      name: t.projects.items.waveodonto.name,
+      type: t.projects.items.waveodonto.type,
+      description: t.projects.items.waveodonto.description,
+      link: "https://waveodonto.com.br/",
+      featured: false,
+      stack: {
+        frontend: ["React", "JavaScript", "TypeScript", "CSS moderno"],
+      },
+      highlights: t.projects.items.waveodonto.highlights,
+    },
+  ];
 
   return (
     <section id="projetos" className="py-24" ref={ref}>
@@ -137,13 +97,12 @@ export function Projects() {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Projetos em Destaque</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.projects.title}</h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-4" />
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Projetos reais que demonstram experiência em desenvolvimento full-stack, arquitetura serverless e design
-            moderno. Confira mais no{" "}
+            {t.projects.subtitle}{" "}
             <Link href="https://github.com/JonathanOJ" target="_blank" className="text-primary hover:underline">
-              GitHub
+              {t.projects.github}
             </Link>
             .
           </p>
@@ -169,7 +128,7 @@ export function Projects() {
                     <Badge variant={project.featured ? "default" : "secondary"}>{project.type}</Badge>
                     {project.featured && (
                       <Badge variant="outline" className="bg-primary/10">
-                        Destaque
+                        {t.projects.featured}
                       </Badge>
                     )}
                   </div>
@@ -178,13 +137,12 @@ export function Projects() {
                 </CardHeader>
 
                 <CardContent className="flex-1 space-y-6">
-                  {/* Stack Técnica */}
                   <div>
-                    <h4 className="font-semibold mb-3 text-sm">Stack Técnica</h4>
+                    <h4 className="font-semibold mb-3 text-sm">{t.projects.sections.stack}</h4>
                     <div className="space-y-3">
                       {project.stack.frontend && (
                         <div>
-                          <p className="text-xs text-muted-foreground mb-2">Frontend</p>
+                          <p className="text-xs text-muted-foreground mb-2">{t.projects.sections.frontend}</p>
                           <div className="flex flex-wrap gap-2">
                             {project.stack.frontend.map((tech) => (
                               <Badge key={tech} variant="outline" className="text-xs">
@@ -196,7 +154,7 @@ export function Projects() {
                       )}
                       {project.stack.backend && (
                         <div>
-                          <p className="text-xs text-muted-foreground mb-2">Backend / Infraestrutura</p>
+                          <p className="text-xs text-muted-foreground mb-2">{t.projects.sections.backend}</p>
                           <div className="flex flex-wrap gap-2">
                             {project.stack.backend.map((tech) => (
                               <Badge key={tech} variant="outline" className="text-xs">
@@ -208,7 +166,7 @@ export function Projects() {
                       )}
                       {project.stack.testing && (
                         <div>
-                          <p className="text-xs text-muted-foreground mb-2">Testes</p>
+                          <p className="text-xs text-muted-foreground mb-2">{t.projects.sections.testing}</p>
                           <div className="flex flex-wrap gap-2">
                             {project.stack.testing.map((tech) => (
                               <Badge key={tech} variant="outline" className="text-xs">
@@ -221,10 +179,9 @@ export function Projects() {
                     </div>
                   </div>
 
-                  {/* Features (apenas para projetos destacados) */}
                   {project.features && (
                     <div>
-                      <h4 className="font-semibold mb-3 text-sm">Funcionalidades Principais</h4>
+                      <h4 className="font-semibold mb-3 text-sm">{t.projects.sections.features}</h4>
                       <ul className="space-y-1 text-sm text-muted-foreground">
                         {project.features.slice(0, 4).map((feature) => (
                           <li key={feature} className="flex items-start gap-2">
@@ -238,7 +195,7 @@ export function Projects() {
 
                   {project.security && (
                     <div>
-                      <h4 className="font-semibold mb-3 text-sm">Segurança</h4>
+                      <h4 className="font-semibold mb-3 text-sm">{t.projects.sections.security}</h4>
                       <ul className="space-y-1 text-sm text-muted-foreground">
                         {project.security.slice(0, 3).map((security) => (
                           <li key={security} className="flex items-start gap-2">
@@ -250,10 +207,9 @@ export function Projects() {
                     </div>
                   )}
 
-                  {/* Highlights */}
                   {project.highlights && (
                     <div>
-                      <h4 className="font-semibold mb-3 text-sm">Destaques</h4>
+                      <h4 className="font-semibold mb-3 text-sm">{t.projects.sections.highlights}</h4>
                       <div className="flex flex-wrap gap-2">
                         {project.highlights.map((highlight) => (
                           <Badge key={highlight} variant="secondary" className="text-xs">
@@ -269,14 +225,14 @@ export function Projects() {
                   {project.link !== "#" && (
                     <Button size="sm" variant="outline" asChild className="rounded-full bg-transparent">
                       <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                        Ver Projeto
+                        {t.projects.viewProject}
                         <ExternalLink className="ml-2 h-3.5 w-3.5" />
                       </Link>
                     </Button>
                   )}
                   {project.link === "#" && (
                     <Badge variant="secondary" className="text-xs">
-                      Projeto Privado
+                      {t.projects.private}
                     </Badge>
                   )}
                 </CardFooter>
@@ -293,12 +249,12 @@ export function Projects() {
         >
           <Button asChild size="lg" variant="outline" className="rounded-full bg-transparent">
             <Link href="https://github.com/JonathanOJ" target="_blank" rel="noopener noreferrer">
-              Ver Todos os Projetos
+              {t.projects.viewAll}
               <Github className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,32 +1,35 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Moon, Sun, Menu, X } from "lucide-react"
-import { useTheme } from "next-themes"
-import Link from "next/link"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Moon, Sun, Menu, X } from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useI18n } from "@/lib/i18n/context";
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const { t } = useI18n();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "Sobre", href: "#sobre" },
-    { label: "Projetos", href: "#projetos" },
-    { label: "Skills", href: "#skills" },
-    { label: "Contato", href: "#contato" },
-  ]
+    { label: t.header.home, href: "#home" },
+    { label: t.header.about, href: "#sobre" },
+    { label: t.header.projects, href: "#projetos" },
+    { label: t.header.skills, href: "#skills" },
+    { label: t.header.contact, href: "#contato" },
+  ];
 
   return (
     <motion.header
@@ -62,6 +65,8 @@ export function Header() {
         </ul>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+
           <Button
             variant="ghost"
             size="icon"
@@ -70,7 +75,7 @@ export function Header() {
           >
             <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Alternar tema</span>
+            <span className="sr-only">{t.header.themeToggle}</span>
           </Button>
 
           <Button
@@ -108,5 +113,5 @@ export function Header() {
         </motion.div>
       )}
     </motion.header>
-  )
+  );
 }
