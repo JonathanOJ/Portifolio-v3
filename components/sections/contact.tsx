@@ -26,15 +26,36 @@ export function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "");
+    formData.append("subject", `Nova mensagem de ${formData.get("name")} - Portfolio`);
 
-    toast({
-      title: t.contact.form.success,
-      description: t.contact.form.successDescription,
-    });
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
 
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || "Erro ao enviar mensagem");
+      }
+
+      toast({
+        title: t.contact.form.success,
+        description: t.contact.form.successDescription,
+      });
+
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      toast({
+        title: "Erro ao enviar",
+        description: error instanceof Error ? error.message : "Tente novamente mais tarde",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const contactInfo = [
