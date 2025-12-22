@@ -92,8 +92,8 @@ export const translations = {
         },
         utfpr: {
           institution: "Universidade Tecnológica Federal do Paraná (UTFPR)",
-          degree: "Análise e Desenvolvimento de Sistemas",
-          location: "Curitiba, PR",
+          degree: "Software Engineering",
+          location: "Dois Vizinhos, PR",
           period: "2022 - 2024",
           description: "Foco em desenvolvimento web, banco de dados, engenharia de software e arquitetura de sistemas.",
           stack: [
@@ -288,7 +288,7 @@ export const translations = {
       timeline: {
         ciss: {
           company: "CISS S.A",
-          location: "Curitiba, PR",
+          location: "Dois Vizinhos, PR",
           current: "Current",
           positions: {
             pleno: {
@@ -318,7 +318,7 @@ export const translations = {
         leadfinder: {
           company: "LeadFinder",
           role: "Full-Stack Developer",
-          location: "Remote",
+          location: "Dois Vizinhos, PR",
           period: "Feb 2023 - Jan 2024",
           responsibilities: [
             "Full-stack development of administrative portal",
@@ -339,8 +339,8 @@ export const translations = {
         },
         utfpr: {
           institution: "Federal University of Technology - Paraná (UTFPR)",
-          degree: "Systems Analysis and Development",
-          location: "Curitiba, PR",
+          degree: "Software Engineering",
+          location: "Dois Vizinhos, PR",
           period: "2022 - 2024",
           description: "Focus on web development, databases, software engineering, and systems architecture.",
           stack: [
