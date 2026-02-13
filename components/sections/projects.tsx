@@ -10,6 +10,7 @@ import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useI18n } from "@/lib/i18n/context";
+import { getAssetPath } from "@/lib/utils";
 
 interface ProjectData {
   id: number;
@@ -140,7 +141,7 @@ export function Projects() {
               >
                 <div className="relative w-full h-64 overflow-hidden bg-muted">
                   <Image
-                    src={project.image || "/placeholder.svg"}
+                    src={getAssetPath(project.image) || "/placeholder.svg"}
                     alt={project.name}
                     fill
                     className="object-cover transition-transform duration-300 hover:scale-105"
